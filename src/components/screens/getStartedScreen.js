@@ -22,7 +22,7 @@ export default function GetStarted({navigation}) {
 
            <View style={styles.getStartedContainer}>
                 <TouchableOpacity style={styles.getStartedOpacity} onPress={() =>{
-                    navigation.navigate("Login") 
+                    navigation.navigate("Select") 
                 }}>
                    <Text style={styles.getStarted}>Get Started</Text>
                 </TouchableOpacity>

@@ -1,207 +1,260 @@
+import React, {Component} from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  StatusBar,
+  TextInput,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+  Platform,
+} from "react-native";
+import * as Animatable from "react-native-animatable";
+import { LinearGradient } from "expo-linear-gradient";
+import Feather from "react-native-vector-icons/Feather";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {connect} from 'react-redux';
+import {loginEmailAccount} from '../../redux/actions/authActions'
 
-import React from 'react';
-import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity, ScrollView, SafeAreaView, } from 'react-native';
+//export default function Login({ navigation }) {
+class LogInScreen extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      eye: "eye-off",
+       email: "",
+       password: "",
+       showPassword: true
+    }
+  }
 
+  handleUpdateState = (name,value)=>{
+      this.setState({ 
+        [name]:value
+      })
+  }
 
-export default function Login({navigation}) {
+  changePasswordType = ()=>{
+    let newState;
+    if(this.state.showPassword){
+      newState = {
+        eye: 'show',
+        showPassword: false,
+        password: this.state.password
+      }
 
-    return(
+    }else {
+      newState = {
+        eye: 'eye-off',
+        showPassword: true,
+        password: this.state.password
+      }
+    }
+    this.setState(newState)
+  };
 
-       <ScrollView>
-        <View style = {styles.mainContainer}>
+  handlePassword = (password) => {
+    let newState = {
+      eye: this.state.showPassword,
+      password: password
+    }
+    this.setState(newState);
+    this.props.callback(password);
+  };
 
-        <View style={styles.loginTextContainer}>
-          
-        </View>
-        
-
-        <View style={styles.imageContainer}>
-        <Text style={styles.loginText}>Login</Text>
-            <Image 
-            style={{width: 300, height: 300, backgroundColor: "lightgray"}}
-            source={require('../../../assets/images/login.png')}/>
-        </View>
-
-        <View style={styles.textInputContainer}>
-            <View style={styles.textInput1}>
-
-              <TextInput placeholder="Email"/>
-
-             </View>
-
-           <View style={styles.textInput2}>
-
-               <TextInput 
-                 placeholder="Password"
-                 secureTextEntry={true} />
-
-            </View>
-
-            <TouchableOpacity onPres={() =>{
-                navigation.navigate("")
-            }}style={styles.forgotPasswordOpacity}>
-            <Text style={styles.forgotPasswordText}>Forgot Password</Text>
-        </TouchableOpacity>
-        
-        </View>
-
-       
-
-        <View style={styles.forgotPasswordContainer}>
-          
-        </View>
-
-        <View style={styles.loginBox}>
-           <TouchableOpacity onPress={() =>{
-               navigation.navigate("Select")
-           }} style={styles.loginOpacity}>
-               <Text style={styles.signInText}>Login</Text>
-           </TouchableOpacity>
-           
-           <View style={styles.createAccountContainer}>
-              <Text style={styles.haveAccount}>Don't have an account? </Text>
-              <TouchableOpacity onPress={() =>{
-                  navigation.navigate("Signup")
-              }} style={styles.createAccountOpacity}>
-                  <Text style={styles.createAccountText}>Signup</Text>
-              </TouchableOpacity>
-           </View>
-
-
-        </View>
-
-         
-     
-     </View>
-        
+  handleOnSubmit = ()=> {
+   this.props.loginEmailAccount(this.state.email, this.state.password)
+  }
+  render(){
+    const {navigation, auth} = this.props
+    return (
     
-     </ScrollView>
-
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#009387" barStyle="light-content" />
+        <View style={styles.header}>
+          <Text style={styles.text_header}>SafePay</Text>
+        </View>
+  
+        <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+          <View style={styles.footer}>
+          {
+            auth.error.login && 
+            <Text style={{color: 'red'}}>{auth.error.login}</Text> 
+          }
+            <Text style={styles.text_footer}>Email</Text>
+            <View style={styles.action}>
+              <Feather name="mail" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Please Enter Your Email Here"
+                value={this.state.email}
+                 onChangeText={(text) => {this.handleUpdateState('email', text)}}
+                style={styles.textInput}
+                autoCapitalize="none"
+              />
+  
+              <Feather name="check-circle" color="green" size={20} />
+            </View>
+  
+            <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
+  
+            <View style={styles.action}>
+              <FontAwesome name="lock" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Please Enter Your password Here"
+                value={this.state.password}
+                 onChangeText={(text) => {this.handleUpdateState('password', text)}}
+                secureTextEntry={this.state.showPassword}
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(text) => {this.handleUpdateState('password', text)}}
+              />
+              <TouchableOpacity onPress={this.changePasswordType}>
+              <Feather name="eye-off" color="grey" size={20} />
+              </TouchableOpacity>
+            
+            </View>
+  
+            <TouchableOpacity
+              onPres={() => {
+                navigation.navigate("");
+              }}
+              style={styles.forgotPasswordOpacity}
+            >
+              <Text style={styles.forgotPasswordText}>Forgot Password</Text>
+            </TouchableOpacity>
+  
+            <View style={styles.button}>
+              <LinearGradient
+                colors={["#48c6ef", "#6f86d6"]}
+                style={styles.signIn}
+              >
+                <TouchableOpacity
+                  onPress={this.handleOnSubmit}
+                >
+                  <Text style={[styles.textSign, { color: "#fff" }]}>
+                    Sign In
+                  </Text>
+                </TouchableOpacity>
+              </LinearGradient>
+            </View>
+            <View style={styles.createAccountContainer}>
+              <Text style={styles.haveAccount}>Don't have an account? </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("SignUpScreen");
+                }}
+                style={styles.createAccountOpacity}
+              >
+                <Text style={styles.createAccountText}>SignUp</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Animatable.View>
+      </View>
     );
-}
+  }
+};
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-        flexDirection: "column",
-        backgroundColor: "#fff",
-        justifyContent: "space-evenly"
-        
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#00B0FF",
+  },
+  header: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    paddingBottom: 50,
+  },
+  footer: {
+    flex: 2,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 40,
+    textAlign: "center",
+    paddingBottom: 20,
+  },
+  text_footer: {
+    color: "#05375a",
+    fontSize: 18,
+  },
+  action: {
+    flexDirection: "row",
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f2f2f2",
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
+    paddingLeft: 10,
+    color: "#05375a",
+  },
+  button: {
+    alignItems: "center",
+    marginTop: 40,
+  },
+  signIn: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  createAccountContainer: {
+    flexDirection: "row",
+    //flex: 1,
+    paddingBottom: 18,
+  },
 
-   loginTextContainer:{
-      // flex: 0.8,
-       //flexDirection: "column",
-       //paddingBottom: 50  
-       
-   },
+  haveAccount: {
+    marginLeft: 25,
+    fontSize: 15,
+    paddingTop: 30,
+    justifyContent: "center",
+  },
 
-    loginText: {
-        fontSize: 40,
-        fontWeight: 'bold',
-        color: '#00d3ff',
-        paddingTop: 70,
-        marginLeft: 1,
-        //marginVertical: 15 
-    },
+  createAccountText: {
+    color: "#00d3ff",
+    fontSize: 16,
+    paddingTop: 30,
+    justifyContent: "center",
+  },
+  forgotPasswordContainer: {
+    //paddingTop: 25,
+    //flex: 1.2,
+  },
 
-    imageContainer: {
-        //flex: 3.2,
-        //flexDirection: "column",
-        marginHorizontal: 40,
-        //marginVertical: 20
-    },
+  forgotPasswordOpacity: {
+    marginLeft: 165,
+    //marginVertical: 3
+    // marginTop:45,
+  },
 
-    textInputContainer: {
-        paddingTop: 20
-       //flex: 0.8,
-       //flexDirection: "column"
-    },
+  forgotPasswordText: {
+    color: "#00d3ff",
+    fontSize: 13,
+  },
+});
 
-    textInput1: {
-        marginLeft: 35,
-        paddingLeft: 15,
-        paddingVertical: 8,
-        height: 45, 
-        width: 300, 
-        backgroundColor: "#ebecf0", 
-        borderRadius: 10, 
-        marginBottom: 20, 
-        //marginBottom: 25
-       
-    },
+const mapStateToProps = (state) => {
+  return {
+    auth: state
+  }
+}
 
-    textInput2: {
-        marginLeft: 35,
-        color: "#e1d6da",
-        paddingLeft: 15,
-        paddingVertical: 8,
-        height: 45, 
-        width: 300, 
-        backgroundColor: "#ebecf0", 
-        borderRadius: 10
-    },
-
-    forgotPasswordContainer: {
-        paddingTop: 25
-       //flex: 1.2,
-       
-    },
-
-    forgotPasswordOpacity: {
-        marginLeft: 200,
-        //marginVertical: 3
-       // marginTop:45,
-        
-    },
-
-    forgotPasswordText: {
-        color: "#00d3ff", 
-        fontSize: 18
-    },
-
-    loginBox: {
-        paddingTop: 20
-        //flex: 1,
-        //marginBottom: 20
-    },
-
-    loginOpacity: {
-      backgroundColor: "#00d3ff",
-      height: 50,
-      width: 150,
-      borderRadius: 50,
-      alignSelf: "center",
-      paddingVertical: 15,
-      paddingHorizontal: 54,
-      //marginVertical: 15,
-      textAlign: "center"
-    },
-
-    signInText: {
-        color: "white",
-        fontSize: 15,
-        fontWeight: "bold"
-
-    },
-
-    createAccountContainer: {
-        flexDirection: "row",
-        //flex: 1,
-        paddingBottom: 18
-    },
-
-    haveAccount: {
-      marginLeft: 25,
-      fontSize: 17,
-      paddingVertical: 40
-    },
-
-    createAccountText: {
-        color: "#00d3ff",
-        fontSize: 17,
-        paddingTop: 40
-    }
-
-
-})
+export default connect(mapStateToProps, {loginEmailAccount} )(LogInScreen);

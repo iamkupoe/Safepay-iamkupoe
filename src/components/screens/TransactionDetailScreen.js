@@ -1,166 +1,263 @@
-import React from 'react';
-import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {Component} from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView
+} from "react-native";
 
+export default class Details extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          companyName: "",
+          sellerNumber: "",
+          itemName: "",
+          itemPrice: "",
+          itemDescription: "",
+        };
+        this.itemName = this.itemName.bind(this);
+        this.itemPrice = this.itemPrice.bind(this);
+        this.sellerPhone = this.sellerPhone.bind(this);
+        this.itemDescription = this.itemDescription.bind(this);
+      }
 
-export default function Details({navigation}) {
+      companyName(e) {
+        this.setState({
+          companyName: e.target.value
+        });
+      }
 
-    return(
-       <View style={styles.detailsContainer}>
+      sellerPhone(e) {
+        this.setState({
+          sellerPhone: e.target.value
+        });
+      }
 
-           <View style={styles.buyingContainer}>
-               <Text style={styles.buyingText}>
-                 What are you buying?
-               </Text>
+      itemName(e) {
+        this.setState({
+          itemName: e.target.value
+        });
+      }
 
-               <TextInput style={styles.inputText}
-               placeholder="  eg. Television set"/>
-           </View>
+      itemPrice(e) {
+        this.setState({
+          itemPrice: e.target.value
+        });
 
-           <View style={styles.priceContainer}>
-               <Text style={styles.priceText}>
-                 What is the price? GH{'\u20B5'}
-               </Text>
+      }
+
+      itemDescription(e) {
+        this.setState({
+          itemDescription: e.target.value
+        });
+      }
+
+      componentDidUpdate(){
+        console.log(this.state);
+      }
+
+      render(){
+        return (
       
-             <View style={styles.currencyContainer}>
-                 {/*<Text style={styles.currency}></Text>*/}
-                  <TextInput style={styles.inputTest}
-                    placeholder="1,800.00"
-                    keyboardType='numeric' />
-               </View>
+          <View style={styles.detailsContainer}>
+
+          <View style={styles.buyingContainer}>
+            <Text style={styles.buyingText}>Name of company you dealing with</Text>
+      
+            <TextInput
+              style={styles.inputText}
+              placeholder= "Company Name"
+              value={this.state.itemName}
+              onChangeText={(itemName) =>{
+                this.setState({itemName})
+              }}
+            />
+          </View>
+
+          <View style={styles.numberContainer}>
+            <Text style={styles.numberText}>Seller's phone number</Text>
+      
+            <TextInput
+              style={styles.inputText}
+              placeholder="Seller's Number"
+              keyboardType="numeric"
+              value={this.state.sellerPhone}
+              onChangeText={(sellerPhone) =>{this.setState({sellerPhone})
+              }}
+             
+            />
+          </View>
+
+          <View style={styles.buyingContainer}>
+            <Text style={styles.buyingText}>What are you buying?</Text>
+      
+            <TextInput
+              style={styles.inputText}
+              placeholder= "Item Name"
+              value={this.state.itemName}
+              onChangeText={(itemName) =>{
+                this.setState({itemName})
+              }}
+            />
+          </View>
+      
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>What is the price? GH{"\u20B5"}</Text>
+      
+            <View style={styles.currencyContainer}>
+              {/*<Text style={styles.currency}></Text>*/}
+              <TextInput
+                style={styles.inputTest}
+                placeholder="Item Price"
+                keyboardType="numeric"
+                value={this.state.itemPrice}
+                onChangeText={(itemPrice) =>{
+                this.setState({itemPrice})
+              }}
+               
+              />
+            </View>
+          </View>
+      
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.descriptionText}>Description</Text>
+      
+            <TextInput
+              style={styles.inputTxt}
+              placeholder="Item Description"
+              autoCorrect={true}
+              editable={true}
+              multiline={true}
+              numberOfLines={2}
+              maxLength={150}
+              value={this.state.itemDescription}
+              onChangeText={(itemDescription) =>{
+                this.setState({itemDescription})
+              }}
               
-           </View>
+            />
+          </View>
+      
+          <View style={styles.opacityContainer}>
+            <TouchableOpacity
+              style={styles.opacity}
+              onPress={() => this.props.navigation.navigate('Summary')}
+            >
+              <Text style={styles.continueText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+         
+        );
 
-           <View style={styles.numberContainer}>
-               <Text style={styles.numberText}>
-                 Seller's phone number
-               </Text>
+      }
+};
 
-               <TextInput style={styles.inputText}
-                     placeholder="02467278431"
-                     keyboardType= 'numeric'/>   
-           </View>
-
-           <View style={styles.descriptionContainer}>
-               <Text style={styles.descriptionText}>
-                 Description
-               </Text>
-
-               <TextInput style={styles.inputTxt}
-               placeholder=" " 
-               autoCorrect={true}
-               editable={true}
-               multiline={true}
-               numberOfLines={2}
-               maxLength={150} /> 
-           </View>
-
-           <View style={styles.opacityContainer}>
-               <TouchableOpacity style={styles.opacity} onPress={() =>{
-                navigation.navigate("Summary") 
-            }}>
-                  <Text style={styles.continueText}>Continue</Text>
-               </TouchableOpacity>
-           </View>
-       </View>
-    );
-}
 
 const styles = StyleSheet.create({
-    detailsContainer: {
-        flex: 1,
-        justifyContent: "space-evenly"
-    },
+  detailsContainer: {
+    flex: 1,
+    //justifyContent: "center",
+    padding: 15,
+  },
 
-    buyingContainer: {
-       marginLeft: 30
-    },
+  buyingContainer: {
+    // marginLeft: 30,
+    paddingBottom: 20,
+  },
 
-    buyingText: {
-       fontSize: 20,
-       paddingBottom: 10
+  buyingText: {
+    fontSize: 20,
+    paddingBottom: 15,
+  },
 
-    },
+  inputText: {
+    backgroundColor: "lightgrey",
+    height: 40,
+    width: 330,
+    borderRadius: 8,
+    fontSize: 15,
+    paddingLeft: 10,
+  },
 
-    inputText: {
-       backgroundColor: "lightgrey",
-       height: 40,
-       width: 280,
-       borderRadius: 8,
-       fontSize: 15,
-       paddingLeft: 10
-    },
+  priceContainer: {
+    // marginLeft: 30,
+    paddingBottom: 20,
+  },
 
-    priceContainer: {
-       marginLeft: 30,
-    },
+  priceText: {
+    fontSize: 20,
+    paddingBottom: 15,
+  },
 
-    priceText: {
-      fontSize: 20,
-      paddingBottom: 10
-    },
+  currencyContainer: {
+    flexDirection: "row",
+  },
 
-    currencyContainer: {
-        flexDirection: "row"
-    },
+  currency: {
+    fontSize: 18,
+    paddingTop: 8,
+  },
 
-    currency: {
-      fontSize: 18,
-      paddingTop: 8
-    },
+  inputTest: {
+    backgroundColor: "lightgrey",
+    height: 40,
+    width: 330,
+    borderRadius: 8,
+    flexDirection: "row",
+    paddingLeft: 10,
+  },
 
-    inputTest: {
-       backgroundColor: "lightgrey",
-       height: 40,
-       width: 280,
-       borderRadius: 8,
-       flexDirection: "row",
-       paddingLeft: 10
-    },
+  numberContainer: {
+    //marginLeft: 30,
+    paddingBottom: 20,
+  },
 
-    numberContainer: {
-        marginLeft: 30,
-    },
+  numberText: {
+    fontSize: 20,
+    paddingBottom: 10,
+  },
 
-    numberText: {
-        fontSize: 20,
-        paddingBottom: 10
-    },
+  descriptionContainer: {
+    //marginLeft: 30,
+    paddingBottom: 15,
+  },
 
-    descriptionContainer: {
-       marginLeft: 30
-    },
+  descriptionText: {
+    fontSize: 20,
+    paddingBottom: 10,
+  },
 
-    descriptionText: {
-       fontSize: 20,
-       paddingBottom: 10
-    }, 
+  inputTxt: {
+    backgroundColor: "lightgrey",
+    height: 80,
+    width: 330,
+    borderRadius: 8,
+    textAlignVertical: "top",
+    fontSize: 15,
+    paddingLeft: 10,
+  },
 
-    inputTxt: {
-        backgroundColor: "lightgrey",
-        height: 80,
-        width: 280,
-        borderRadius: 8,
-        textAlignVertical: "top",
-        fontSize: 15,
-        paddingLeft: 10
-    },
+  opacityContainer: {
+    alignSelf: "center",
+    marginVertical: 30,
+  },
 
-    opacityContainer: {
-        alignSelf: "center"
-    },
+  opacity: {
+    backgroundColor: "#00d3ff",
+    width: 150,
+    height: 50,
+    borderRadius: 30,
+  },
 
-    opacity: {
-      backgroundColor: "#00d3ff",
-      width: 120,
-      height: 50,
-      borderRadius: 30
-    },
-
-    continueText: {
-        fontSize: 18,
-        color: "white",
-        textAlign: "center",
-        paddingTop: 13,
-        fontWeight: "bold"
-    }
+  continueText: {
+    fontSize: 18,
+    color: "white",
+    textAlign: "center",
+    paddingTop: 13,
+    fontWeight: "bold",
+  },
 })

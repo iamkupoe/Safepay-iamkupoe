@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 
-export default function AlertScreen() {
+export default function AlertScreen({ navigation }) {
 
 
 
@@ -17,7 +17,9 @@ export default function AlertScreen() {
                   Pending Buyer's confirmation &{'\n'}payment
               </Text>
 
-              <TouchableOpacity style={styles.opacity}>
+              <TouchableOpacity style={styles.opacity} onPress={() =>{
+                navigation.navigate("GetStarted") 
+            }}>
                   <Text style={styles.okText}>
                       Ok
                   </Text>
