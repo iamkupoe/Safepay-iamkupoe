@@ -69,3 +69,12 @@ export function loginError(error){
         payload:error
     }
 }
+
+export function transactions(data ){
+    return {
+        type: "SEND_DATA",
+        data: data
+    }
+}
+
+

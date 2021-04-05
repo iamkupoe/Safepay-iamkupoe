@@ -1,14 +1,15 @@
 import React, {Component} from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {connect} from 'react-redux';
 
-export default class SummaryScreen extends Component {
+class SummaryScreen extends Component {
  render(){
   return (
     <View style={styles.mainContainer}>
       <View style={styles.amountContainer}>
         <Text style={styles.amountText}>Summary</Text>
 
-        <Text style={styles.totalText}>GH{"\u20B5"}</Text>
+        <Text style={styles.totalText}>GH{"\u20B5"}{this.props.transact.itemPrice}</Text>
 
         <Text style={styles.safepayText}>SafePay fee: GH{"\u20B5"}20.20</Text>
       </View>
@@ -16,7 +17,7 @@ export default class SummaryScreen extends Component {
       <View style={styles.horizontalLine} />
 
       <View style={styles.sellerContainer}>
-        <Text style={styles.dealingText}>You are dealing with :</Text>
+        <Text style={styles.dealingText}>You are dealing with :{this.props.transact.companyName, this.props.transact.sellerNumber}</Text>
         <Text style={styles.numberText}></Text>
         <Text style={styles.companyText}></Text>
       </View>
@@ -24,7 +25,7 @@ export default class SummaryScreen extends Component {
       <View style={styles.horizontalLine} />
 
       <View style={styles.itemContainer}>
-        <Text style={styles.purchaseText}>Your are purchasing :</Text>
+        <Text style={styles.purchaseText}>Your are purchasing :{this.props.transact.itemName}</Text>
         <Text style={styles.itemText}></Text>
       </View>
 
@@ -32,7 +33,7 @@ export default class SummaryScreen extends Component {
 
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionText}>Description :</Text>
-        <Text style={styles.itemText}>itemDescription</Text>
+        <Text style={styles.itemText}>itemDescription{this.props.transact.itemDescription}</Text>
       </View>
 
       <View style={styles.opacityContainer}>
@@ -165,3 +166,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+  transact : state
+  }
+}
+
+export default connect(mapStateToProps,null)(SummaryScreen);

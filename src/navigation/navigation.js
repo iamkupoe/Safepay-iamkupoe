@@ -2,6 +2,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import {connect} from 'react-redux';
 
 
 import LogInScreen from '../components/screens/LogInScreen';
@@ -17,27 +18,14 @@ import Alert from '../components/screens/AlertScreen';
 
 const Stack  = createStackNavigator()
 
-export default function AppContainer() {
+function AppContainer({auth}) {
   return (
 
     <NavigationContainer>
-    
-      <Stack.Navigator initialRouteName="LogInScreen">
-      <Stack.Screen
-      options={{
-        headerShown: false
-        }}
-        
-        name="LogInScreen" component={LogInScreen}/>
-
-
-        <Stack.Screen
-            options={{
-              headerShown: false
-                }}
-                
-              name="SignUpScreen" component={SignUpScreen}/>
-      
+     
+       {
+         auth.login ?
+      <Stack.Navigator>
          <Stack.Screen
             options={{
               headerShown: false
@@ -106,9 +94,38 @@ export default function AppContainer() {
                     name="Alert" component={Alert}/>
              
       </Stack.Navigator>
-    
+
+      :
+
+      <Stack.Navigator initialRouteName="LogInScreen">
+      <Stack.Screen
+      options={{
+        headerShown: false
+        }}
+        
+        name="LogInScreen" component={LogInScreen}/>
+
+
+        <Stack.Screen
+            options={{
+              headerShown: false
+                }}
+                
+              name="SignUpScreen" component={SignUpScreen}/>
+      </Stack.Navigator>
+       }
+  
     </NavigationContainer>
   );
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state
+  }
+}
+
+export default connect(mapStateToProps)(AppContainer);
 
 

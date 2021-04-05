@@ -7,8 +7,10 @@ import {
   StyleSheet,
   SafeAreaView
 } from "react-native";
+import {connect} from 'react-redux';
+import {transactions} from '../../redux/actions/authActions';
 
-export default class Details extends Component {
+class Details extends Component {
       constructor(props) {
         super(props);
         this.state = {
@@ -56,10 +58,18 @@ export default class Details extends Component {
       }
 
       componentDidUpdate(){
-        console.log(this.state);
-      }
+       console.log(this.state)
+     }
+
+      handleOnSubmit = ()=> {
+      const data = this.state;
+
+        this.props.transactions(data)
+         console.log(this.props.transact)
+       }
 
       render(){
+        
         return (
       
           <View style={styles.detailsContainer}>
@@ -70,9 +80,9 @@ export default class Details extends Component {
             <TextInput
               style={styles.inputText}
               placeholder= "Company Name"
-              value={this.state.itemName}
-              onChangeText={(itemName) =>{
-                this.setState({itemName})
+              value={this.state.companyName}
+              onChangeText={(companyName) =>{
+                this.setState({companyName})
               }}
             />
           </View>
@@ -144,7 +154,7 @@ export default class Details extends Component {
           <View style={styles.opacityContainer}>
             <TouchableOpacity
               style={styles.opacity}
-              onPress={() => this.props.navigation.navigate('Summary')}
+              onPress={this.props.handleOnSubmit}
             >
               <Text style={styles.continueText}>Continue</Text>
             </TouchableOpacity>
@@ -261,3 +271,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 })
+
+const mapStateToProps = (state) => {
+  return {
+  transact : state
+  }
+}
+
+const mapDispatchToProps = () => {
+  return {
+   transactions
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps()) (Details);
