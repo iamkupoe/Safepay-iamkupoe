@@ -7,7 +7,7 @@ class SummaryScreen extends Component {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.amountContainer}>
-        <Text style={styles.amountText}>Summary</Text>
+        <Text style={styles.amountText}>Summary{console.log(this.props.transact)}</Text>
 
         <Text style={styles.totalText}>GH{"\u20B5"}{this.props.transact.itemPrice}</Text>
 

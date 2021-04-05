@@ -65,8 +65,10 @@ class Details extends Component {
       const data = this.state;
 
         this.props.transactions(data)
-         console.log(this.props.transact)
-       }
+         console.log(this.props.transact);
+
+          
+       };
 
       render(){
         
@@ -154,7 +156,9 @@ class Details extends Component {
           <View style={styles.opacityContainer}>
             <TouchableOpacity
               style={styles.opacity}
-              onPress={this.props.handleOnSubmit}
+              onPress={() => {
+                this.handleOnSubmit, this.props.navigation.navigate("Summary"); 
+              }}
             >
               <Text style={styles.continueText}>Continue</Text>
             </TouchableOpacity>
