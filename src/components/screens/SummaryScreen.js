@@ -4,10 +4,11 @@ import {connect} from 'react-redux';
 
 class SummaryScreen extends Component {
  render(){
+   console.log("summary",this.props.transact)
   return (
     <View style={styles.mainContainer}>
       <View style={styles.amountContainer}>
-        <Text style={styles.amountText}>Summary{console.log(this.props.transact)}</Text>
+        <Text style={styles.amountText}>Summary</Text>
 
         <Text style={styles.totalText}>GH{"\u20B5"}{this.props.transact.itemPrice}</Text>
 
@@ -17,8 +18,8 @@ class SummaryScreen extends Component {
       <View style={styles.horizontalLine} />
 
       <View style={styles.sellerContainer}>
-        <Text style={styles.dealingText}>You are dealing with :{this.props.transact.companyName, this.props.transact.sellerNumber}</Text>
-        <Text style={styles.numberText}></Text>
+        <Text style={styles.dealingText}>You are dealing with :{this.props.transact.companyName}</Text>
+        <Text style={styles.numberText}>Number:{this.props.transact.sellerNumber}</Text>
         <Text style={styles.companyText}></Text>
       </View>
 
@@ -32,8 +33,8 @@ class SummaryScreen extends Component {
       <View style={styles.horizontalLine} />
 
       <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionText}>Description :</Text>
-        <Text style={styles.itemText}>itemDescription{this.props.transact.itemDescription}</Text>
+        <Text style={styles.descriptionText}>Description : {this.props.transact.itemDescription}</Text>
+        <Text style={styles.itemText}></Text>
       </View>
 
       <View style={styles.opacityContainer}>
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 18,
+    color: "#484b5a",
     //paddingLeft: 10,
   },
   companyText: {
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-  transact : state
+  transact : state.transactions
   }
 }
 
