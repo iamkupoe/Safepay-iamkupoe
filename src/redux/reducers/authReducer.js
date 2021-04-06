@@ -13,10 +13,10 @@ export default (state=initialState,action)=>{
             return{...state, login:false, user:null}
         case "REGISTER_ERROR":
             return {...state, error:{register:action.payload}}   
-            case "LOGIN_ERROR":
-                return {...state, error:{login:action.payload}}   
-            case "SEND_DATA":
-                return {...state, transactions:{data:action.data}}
+        case "LOGIN_ERROR":
+            return {...state, error:{login:action.payload}}   
+        case "SEND_DATA":
+            return {...state, transactions:action.data}
 
         default:
             return state;

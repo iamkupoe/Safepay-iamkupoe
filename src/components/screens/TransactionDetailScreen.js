@@ -65,11 +65,13 @@ class Details extends Component {
       const data = this.state;
 
         this.props.transactions(data)
-         console.log(this.props.transact)
-       }
+       
+        this.props.navigation.navigate("Summary")
+          
+       };
 
       render(){
-        
+        console.log(this.props.transact);
         return (
       
           <View style={styles.detailsContainer}>
@@ -95,7 +97,7 @@ class Details extends Component {
               placeholder="Seller's Number"
               keyboardType="numeric"
               value={this.state.sellerPhone}
-              onChangeText={(sellerPhone) =>{this.setState({sellerPhone})
+              onChangeText={(sellerNumber) =>{this.setState({sellerNumber})
               }}
              
             />
@@ -154,7 +156,9 @@ class Details extends Component {
           <View style={styles.opacityContainer}>
             <TouchableOpacity
               style={styles.opacity}
-              onPress={this.props.handleOnSubmit}
+              onPress={() => {
+               this.handleOnSubmit()
+              }}
             >
               <Text style={styles.continueText}>Continue</Text>
             </TouchableOpacity>
