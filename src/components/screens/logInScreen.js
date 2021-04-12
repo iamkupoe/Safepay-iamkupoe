@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {connect} from 'react-redux';
-import {loginEmailAccount} from '../../redux/actions/authActions'
+import {loginEmailAccount} from '../../../src/components/redux/actions/authActions';
 
 //export default function Login({ navigation }) {
 class LogInScreen extends Component{

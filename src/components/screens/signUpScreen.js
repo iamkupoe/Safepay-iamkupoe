@@ -13,7 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {connect} from 'react-redux';
-import {createEmailAccount, registerError} from '../../redux/actions/authActions';
+import {createEmailAccount, registerError} from '../../../src/components/redux/actions/authActions';
 
 class SignUpScreen extends Component {
      constructor(props){

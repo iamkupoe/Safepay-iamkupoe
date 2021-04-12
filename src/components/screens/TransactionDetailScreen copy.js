@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { connect } from "react-redux";
-import { transactions } from "../../../src/components/redux/actions/authActions";
+import { transactions } from "../../src/components/redux/actions/authActions";
 
 class Details extends Component {
   constructor(props) {
@@ -124,8 +124,7 @@ class Details extends Component {
               {/*<Text style={styles.currency}></Text>*/}
               <TextInput
                 style={styles.inputTest}
-                placeholder="Item Price (no , & .)"
-                id="4"
+                placeholder="Item Price"
                 keyboardType="numeric"
                 value={this.state.itemPrice}
                 onChangeText={(itemPrice) => {
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
 
   opacityContainer: {
     alignSelf: "center",
-    marginTop: 60,
+    marginVertical: 30,
   },
 
   opacity: {

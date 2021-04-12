@@ -9,9 +9,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-function PaymentScreen({ navigation, route }) {
+function PaymentScreen({ navigation }) {
   const [selectedValue, setSelectedValue] = useState("Network");
-
   return (
     <View style={styles.parentContainer}>
       <View style={styles.paymentTextContainer}>
@@ -19,10 +18,7 @@ function PaymentScreen({ navigation, route }) {
       </View>
 
       <View style={styles.totalAmount}>
-        <Text style={styles.amountText}>
-          GH{"\u20B5"}
-          {route.params.data}
-        </Text>
+        <Text style={styles.amountText}>GH{"\u20B5"}1,820.20</Text>
       </View>
 
       <View style={styles.momoTextContainer}>
@@ -147,7 +143,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    sum: state.total,
     transact: state.transactions,
   };
 };

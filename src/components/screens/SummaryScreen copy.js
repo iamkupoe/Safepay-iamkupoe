@@ -1,39 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { total } from "../../../src/components/redux/actions/authActions";
+import { summary } from "../components/redux/actions/authActions";
 
 class SummaryScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      safePayFee: "",
-    };
-    this.fee = this.safePayFee.bind(this);
-  }
-
-  safePayFee(e) {
-    this.setState({
-      safePayFee: e.target.value,
-    });
-  }
-
-  handleOnSubmit = () => {
-    const info = this.state;
-
-    this.props.total(info);
-    const sale = this.props.transact.itemPrice;
-    const percent = 3;
-
-    const percentage = (percent / 100) * sale;
-    const overAllPayment = Number(this.props.transact.itemPrice) + percentage;
-
-    this.props.navigation.navigate("Payment", { data: overAllPayment });
-  };
-
   render() {
     console.log("summary", this.props.transact);
-
     return (
       <View style={styles.mainContainer}>
         <View style={styles.amountContainer}>
@@ -44,7 +16,7 @@ class SummaryScreen extends Component {
             {this.props.transact.itemPrice}
           </Text>
 
-          <Text style={styles.safepayText}>SafePay fee: 3% of item price</Text>
+          <Text style={styles.safepayText}>SafePay fee: GH{"\u20B5"}20.20</Text>
         </View>
 
         <View style={styles.horizontalLine} />
@@ -80,9 +52,7 @@ class SummaryScreen extends Component {
         <View style={styles.opacityContainer}>
           <TouchableOpacity
             style={styles.opacity}
-            onPress={() => {
-              this.handleOnSubmit();
-            }}
+            onPress={() => this.props.navigation.navigate("Payment")}
           >
             <Text style={styles.continue}>Continue</Text>
           </TouchableOpacity>
@@ -218,7 +188,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = () => {
   return {
-    total,
+    summary,
   };
 };
 

@@ -2,7 +2,8 @@ const initialState = {
     login: false,
     user:null,
     error: {},
-    transactions: {}
+    transactions: {},
+    total: {}
 } 
 
 export default (state=initialState,action)=>{
@@ -17,6 +18,8 @@ export default (state=initialState,action)=>{
             return {...state, error:{login:action.payload}}   
         case "SEND_DATA":
             return {...state, transactions:action.data}
+        case "SEND_SUMMARY":
+            return {...state, total:action.info}
 
         default:
             return state;
